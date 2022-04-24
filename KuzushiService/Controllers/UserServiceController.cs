@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
+using System.Linq;
 
-namespace KuzushiService.Controllers
+namespace KuzushiService
 {
     [ApiController]
-    [Route("[controller]")]
-    public class UserServiceController : ControllerBase
+    [Route("api/[controller]/[action]")]
+    public class UserServiceController
     {
         private readonly ILogger<UserServiceController> _logger;
 
@@ -13,11 +15,14 @@ namespace KuzushiService.Controllers
             _logger = logger;
         }
 
+        /// <summary>
+        /// Get a list of Users.
+        /// </summary>
         [HttpGet(Name = "GetUser")]
-        public string Get()
+        public string GetUser()
         {
             User testUser = new User("TestUser", "TestRank");
-            return $"Name: {testUser.Name}, Rank: {testUser.Rank}";
+            return JsonConvert.SerializeObject(testUser);
         }
     }
 }
